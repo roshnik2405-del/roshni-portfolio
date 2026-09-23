@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roshni Karmakar — Creative UI/UX & Web Developer</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Space+Grotesk:wght@300;400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* CSS Variables for Palette */
+    :root {
+      --blood-red: #9B111E;
+      --blood-dark: #660000;
+      --blood-glow: #FF1E27;
+      --bg-dark: #070709;
+      --card-bg: rgba(18, 14, 18, 0.75);
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      font-family: 'Space Grotesk', sans-serif;
+      color: #E2E8F0;
+      overflow-x: hidden;
+      cursor: none; /* Replaced by custom cursor */
+    }
+
+    /* Fixed Grid Pattern */
+    .bg-grid-fixed {
+      background-image: 
+        linear-gradient(to right, rgba(155, 17, 30, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(155, 17, 30, 0.08) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-attachment: fixed;
+    }
+
+    /* Custom Typography Classes */
+    .font-syne { font-family: 'Syne', sans-serif; }
+    .font-cinzel { font-family: 'Cinzel Decorative', serif; }
+
+    /* Custom Cursor Element Styling */
+    #cursor-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--blood-glow);
+      box-shadow: 0 0 10px var(--blood-glow), 0 0 20px var(--blood-glow);
+    }
+    #cursor-ring {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid rgba(255, 30, 39, 0.6);
+      box-shadow: 0 0 15px rgba(155, 17, 30, 0.3);
+      transition: width 0.2s, height 0.2s, border-color 0.2s, background-color 0.2s;
+    }
+    body.cursor-hover #cursor-ring {
+      width: 54px;
+      height: 54px;
+      border-color: var(--blood-glow);
+      background-color: rgba(155, 17, 30, 0.15);
+      box-shadow: 0 0 25px rgba(255, 30, 39, 0.5);
+    }
+
+    /* Navigation Bar Styling */
+    .nav-pill {
+      background: rgba(15, 10, 14, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(155, 17, 30, 0.4);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(155, 17, 30, 0.2);
+    }
+
+    /* Blood-Red Glowing Button Component */
+    .btn-blood {
+      position: relative;
+      background: linear-gradient(135deg, #18090C 0%, #0A0304 100%);
+      border: 1px solid var(--blood-red);
+      color: #FFFFFF;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 0 15px rgba(155, 17, 30, 0.3);
+    }
+    .btn-blood::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 30, 39, 0.4), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn-blood:hover::before {
+      left: 100%;
+    }
+    .btn-blood:hover {
+      transform: translateY(-3px) scale(1.02);
+      border-color: var(--blood-glow);
+      box-shadow: 0 0 25px rgba(255, 30, 39, 0.6), 0 0 50px rgba(155, 17, 30, 0.3);
+      color: #FFD1D4;
+    }
+
+    /* Photo Frame Aura Effect */
+    .photo-aura {
+      position: relative;
+    }
+    .photo-aura::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 1.5rem;
+      background: linear-gradient(45deg, var(--blood-red), transparent, var(--blood-glow));
+      z-index: -1;
+      filter: blur(10px);
+      opacity: 0.7;
+      transition: opacity 0.5s ease;
+    }
+    .photo-aura:hover::before {
+      opacity: 1;
+      filter: blur(16px);
+    }
+
+    /* Keyframe Animations */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(3deg); }
+    }
+    .animate-float {
+      animation: floatSlow 6s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+    .animate-pulse-glow {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    /* Scroll Reveal Initial States */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Touch Devices Cursor Reset */
+    @media (hover: none) and (pointer: coarse) {
+      body { cursor: auto; }
+      #cursor-dot, #cursor-ring { display: none !important; }
+    }
+    /* ========================================== */
+/* ROSHNI SKILLS SECTION - CUSTOM STYLES      */
+/* ========================================== */
+
+.roshni-skills-section {
+  position: relative;
+}
+
+/* Background Ambient Glow */
+.roshni-skills-ambient-glow {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(155, 17, 30, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Card Light Sweep Effect */
+.roshni-card-light-sweep {
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 30, 39, 0.15),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: left 0.85s ease;
+  pointer-events: none;
+}
+
+.roshni-skill-card:hover .roshni-card-light-sweep {
+  left: 150%;
+}
+
+/* Pulse Line for Frontend Card */
+@keyframes roshniPulseLine {
+  0%, 100% { opacity: 0.3; width: 40%; }
+  50% { opacity: 0.9; width: 85%; }
+}
+.roshni-pulse-line {
+  animation: roshniPulseLine 3s ease-in-out infinite;
+}
+
+/* Pulse Node for Interaction Card */
+@keyframes roshniPulseNode {
+  0% { left: 0%; opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { left: 90%; opacity: 0.2; }
+}
+.roshni-pulse-node {
+  animation: roshniPulseNode 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Traveling Star Animation for AI Card */
+@keyframes roshniTravelStar {
+  0% { left: 8px; opacity: 0; transform: scale(0.6) rotate(0deg); }
+  20% { opacity: 1; transform: scale(1.2) rotate(90deg); }
+  80% { opacity: 1; transform: scale(1.2) rotate(270deg); }
+  100% { left: calc(100% - 20px); opacity: 0; transform: scale(0.6) rotate(360deg); }
+}
+.roshni-traveling-star {
+  animation: roshniTravelStar 3.5s linear infinite;
+}
+
+/* Scroll Reveal Initial Animation State */
+.roshni-reveal-item {
+  opacity: 0;
+  transform: translateY(35px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.roshni-reveal-item.roshni-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* 3D Tilt Smoothness */
+.roshni-skill-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .roshni-card-light-sweep,
+  .roshni-pulse-line,
+  .roshni-pulse-node,
+  .roshni-traveling-star,
+  .roshni-reveal-item {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+/* ================================================================= */
+/* ROSHNI PROJECTS SECTION - CUSTOM ISOLATED STYLES                 */
+/* ================================================================= */
+
+.roshni-projects-section {
+  position: relative;
+}
+
+/* Section Ambient Background Glow Spot */
+.roshni-projects-ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(155, 17, 30, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Card Light Sweep Transition */
+.roshni-card-light-sweep {
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 30, 39, 0.12),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: left 0.85s ease;
+  pointer-events: none;
+}
+
+.roshni-project-card:hover .roshni-card-light-sweep {
+  left: 150%;
+}
+
+/* Scroll Entrance Reveal Animations */
+.roshni-prj-reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.roshni-prj-reveal.roshni-prj-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Dragging active state for CRM panels */
+.roshni-drag-panel.is-dragging {
+  opacity: 0.85;
+  scale: 1.03;
+  box-shadow: 0 10px 25px rgba(255, 30, 39, 0.3);
+  border-color: var(--blood-glow, #FF1E27) !important;
+}
+
+/* Kanban item dragging styles */
+.roshni-kanban-item.is-dragging-item {
+  opacity: 0.4;
+  border-style: dashed;
+}
+
+.roshni-kanban-col.drag-over-col {
+  background-color: rgba(155, 17, 30, 0.2);
+  border-color: var(--blood-glow, #FF1E27);
+}
+
+/* Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  .roshni-card-light-sweep,
+  .roshni-prj-reveal {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+/* ================================================================= */
+/* ROSHNI EDUCATION SECTION - ISOLATED CUSTOM STYLES                 */
+/* ================================================================= */
+
+.roshni-education-section {
+  position: relative;
+}
+
+/* Ambient Section Background Glow */
+.roshni-edu-ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(155, 17, 30, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Card Light Sweep Transition Effect */
+.roshni-card-light-sweep {
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 30, 39, 0.12),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: left 0.85s ease;
+  pointer-events: none;
+}
+
+.roshni-edu-card:hover .roshni-card-light-sweep {
+  left: 150%;
+}
+
+/* Timeline Scroll Reveal Styles */
+.roshni-edu-reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.roshni-edu-reveal.roshni-edu-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced Motion Compatibility */
+@media (prefers-reduced-motion: reduce) {
+  .roshni-card-light-sweep,
+  .roshni-edu-reveal,
+  .roshni-edu-line-pulse {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+/* ================================================================= */
+/* CONTACT SECTION CUSTOM STYLES                                     */
+/* ================================================================= */
+
+.roshni-contact-section {
+  position: relative;
+}
+
+/* Background Glow Effect */
+.roshni-contact-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(255, 30, 39, 0.12) 0%, rgba(155, 17, 30, 0.05) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scroll Entrance Animation */
+.roshni-contact-reveal {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.roshni-contact-reveal.roshni-contact-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roshni-contact-reveal {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+  </style>
+</head>
+<body class="bg-grid-fixed relative min-h-screen">
+
+  <!-- HTML5 Canvas for Interactive Glitter & Stars Background -->
+  <canvas id="star-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Custom Dual-Ring Cursor -->
+  <div id="cursor-dot" class="fixed top-0 left-0 rounded-full pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2"></div>
+  <div id="cursor-ring" class="fixed top-0 left-0 rounded-full pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2"></div>
+
+  <!-- Floating Header Navigation -->
+  <header class="fixed top-6 left-0 right-0 z-40 flex justify-center px-4">
+    <nav class="nav-pill rounded-2xl px-6 py-3 flex items-center gap-6 md:gap-10">
+      <a href="#about" class="text-xs md:text-sm font-bold tracking-wider text-gray-300 hover:text-[var(--blood-glow)] transition-colors flex items-center gap-1.5">
+        <span class="text-[var(--blood-glow)] text-xs">✦</span> About
+      </a>
+      <a href="#skills" class="text-xs md:text-sm font-bold tracking-wider text-gray-300 hover:text-[var(--blood-glow)] transition-colors flex items-center gap-1.5">
+        <span class="text-[var(--blood-glow)] text-xs">✦</span> Skills
+      </a>
+      <a href="#projects" class="text-xs md:text-sm font-bold tracking-wider text-gray-300 hover:text-[var(--blood-glow)] transition-colors flex items-center gap-1.5">
+        <span class="text-[var(--blood-glow)] text-xs">✦</span> Projects
+      </a>
+      <a href="#education" class="text-xs md:text-sm font-bold tracking-wider text-gray-300 hover:text-[var(--blood-glow)] transition-colors flex items-center gap-1.5">
+        <span class="text-[var(--blood-glow)] text-xs">✦</span> Education
+      </a>
+      <a href="#contact" class="text-xs md:text-sm font-bold tracking-wider text-gray-300 hover:text-[var(--blood-glow)] transition-colors flex items-center gap-1.5">
+        <span class="text-[var(--blood-glow)] text-xs">✦</span> Contact
+      </a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="about" class="relative z-10 min-h-screen pt-36 pb-20 px-6 max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+    
+    <!-- Left Column: Hero Text & Buttons -->
+    <div class="flex-1 space-y-6">
+      
+      <!-- Role Badge -->
+      <div class="reveal inline-flex items-center gap-2 bg-[#1A0508] text-[var(--blood-glow)] text-xs font-mono font-bold px-4 py-1.5 rounded-full border border-[var(--blood-red)] shadow-[0_0_10px_rgba(155,17,30,0.4)]">
+        <span>✦</span> UI/UX DESIGNER & WEB DEVELOPER
+      </div>
+
+      <!-- Main Headline -->
+      <div class="reveal space-y-1">
+        <p class="text-2xl md:text-3xl font-cinzel text-gray-400">Hi, I'm</p>
+        <h1 class="text-6xl md:text-8xl font-syne font-extrabold tracking-tight text-white leading-none">
+          Roshni <br/>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--blood-glow)] via-[#D92B34] to-[var(--blood-red)] drop-shadow-[0_0_20px_rgba(255,30,39,0.5)]">
+            Karmakar
+          </span>
+        </h1>
+      </div>
+
+      <!-- Bio Paragraph -->
+      <p class="reveal text-gray-300 text-base md:text-lg max-w-xl font-light leading-relaxed">
+        Passionate BCA student constructing interactive, high-motion web applications. I bridge expressive visual interfaces in Figma with precise, responsive front-end execution.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="reveal flex flex-wrap gap-5 pt-2">
+        <a href="https://drive.google.com/file/d/1lFdunQUpkkTU44Vg02inl0MoU5TqIPg7/view?usp=sharing" download class="btn-blood px-7 py-3.5 rounded-xl font-bold text-sm tracking-wider uppercase flex items-center gap-2">
+          <span>✦</span> Download CV
+        </a>
+        <a href="mailto:roshnik2405@gmail.com" class="btn-blood px-7 py-3.5 rounded-xl font-bold text-sm tracking-wider uppercase flex items-center gap-2">
+          <span>✉</span> Contact Me
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Interactive Profile Photo -->
+    <div class="reveal flex-1 flex justify-center items-center">
+      <div class="photo-aura animate-float">
+        <div class="relative w-72 h-80 md:w-80 md:h-96 rounded-2xl overflow-hidden bg-[#120B10] border-2 border-[var(--blood-red)] shadow-[0_0_30px_rgba(0,0,0,0.9)]">
+          <img src="me.pdf.jpeg" 
+               alt="Roshni Karmakar" 
+               class="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-700 hover:scale-105">
+          <!-- Ambient Overlay Badge -->
+          <div class="absolute bottom-3 left-3 right-3 bg-[#0A0406]/80 backdrop-blur-md border border-[var(--blood-red)]/50 p-2.5 rounded-xl text-center">
+            <p class="text-xs font-mono text-gray-300">✦ ROSHNI KARMAKAR ✦</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Skills Section -->
+  <!-- ========================================== -->
+<!-- ROSHNI SKILLS SECTION                      -->
+<!-- ========================================== -->
+<section id="skills" class="roshni-skills-section relative z-10 py-32 px-4 md:px-8 max-w-7xl mx-auto overflow-hidden">
+  
+  <!-- Subtle Ambient Glow Spot for this Section -->
+  <div class="roshni-skills-ambient-glow" aria-hidden="true"></div>
+
+  <!-- Section Intro Header -->
+  <div class="roshni-skills-header text-center mb-16 md:mb-24 roshni-reveal-item">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#180508] border border-[var(--blood-red,#9B111E)] text-[var(--blood-glow,#FF1E27)] font-mono text-xs uppercase tracking-widest mb-4 shadow-[0_0_15px_rgba(155,17,30,0.3)]">
+      <span>✦</span> MY CREATIVE TOOLKIT <span>✦</span>
+    </div>
+    
+    <h2 class="text-4xl sm:text-6xl md:text-7xl font-syne font-extrabold text-white tracking-tight leading-none mb-6">
+      SK<span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--blood-glow,#FF1E27)] via-[#E61F2A] to-[var(--blood-red,#9B111E)]">IL</span>LS
+    </h2>
+
+    <p class="font-cinzel text-base md:text-xl text-gray-300 italic max-w-xl mx-auto tracking-wide">
+      "I don't just use tools. I play with them. <span class="text-[var(--blood-glow,#FF1E27)] not-italic">✦</span>"
+    </p>
+  </div>
+
+  <!-- Asymmetrical Editorial Grid -->
+  <div class="roshni-skills-grid grid grid-cols-1 md:grid-cols-12 gap-6 relative">
+
+    <!-- ================= CARD 01: FRONTEND ================= -->
+    <div class="roshni-skill-card roshni-skill-card--frontend md:col-span-7 bg-[#0E090C]/80 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-[var(--blood-red,#9B111E)]/40 hover:border-[var(--blood-glow,#FF1E27)] transition-all duration-500 relative overflow-hidden group shadow-[0_10px_30px_rgba(0,0,0,0.8)] roshni-reveal-item" data-tilt>
+      <div class="roshni-card-light-sweep"></div>
+      
+      <!-- Card Header -->
+      <div class="flex justify-between items-center mb-6 z-10 relative">
+        <span class="font-mono text-xs font-bold tracking-widest text-[var(--blood-glow,#FF1E27)]">01 ✦ FRONTEND</span>
+        <span class="text-xs font-mono text-gray-400 bg-[#1A0A0E] px-3 py-1 rounded-full border border-[var(--blood-red,#9B111E)]/30">BUILDING SPACES</span>
+      </div>
+
+      <!-- Content Info -->
+      <div class="mb-6 z-10 relative">
+        <h3 class="text-2xl md:text-3xl font-syne font-bold text-white mb-2 group-hover:text-[var(--blood-glow,#FF1E27)] transition-colors">
+          HTML / CSS / JavaScript
+        </h3>
+        <p class="text-gray-400 text-sm max-w-md font-light">
+          Sculpting expressive, responsive DOM elements infused with liquid motion and custom dynamic CSS keyframes.
+        </p>
+      </div>
+
+      <!-- Interactive Miniature Visual: Animated Browser Environment -->
+      <div class="roshni-mini-browser bg-[#070406] border border-[var(--blood-red,#9B111E)]/50 rounded-xl p-4 relative z-10 overflow-hidden shadow-inner">
+        <!-- Browser Bar -->
+        <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-3">
+          <div class="flex gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-[var(--blood-glow,#FF1E27)]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-600/60"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-600/60"></span>
+          </div>
+          <span class="text-[10px] font-mono text-gray-500">roshni.space/live-dom</span>
+          <span class="text-xs text-[var(--blood-glow,#FF1E27)]">&lt;/&gt;</span>
+        </div>
+        <!-- Live Code/Element Animation Canvas -->
+        <div class="space-y-2 text-xs font-mono">
+          <div class="flex items-center gap-2">
+            <span class="text-gray-600">&lt;div class="art"&gt;</span>
+            <div class="h-1.5 bg-[var(--blood-red,#9B111E)]/60 rounded flex-1 roshni-pulse-line"></div>
+          </div>
+          <div class="pl-4 flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-[var(--blood-glow,#FF1E27)]/20 border border-[var(--blood-glow,#FF1E27)] flex items-center justify-center text-[var(--blood-glow,#FF1E27)] text-[10px] group-hover:rotate-12 transition-transform">✦</div>
+            <div class="space-y-1 flex-1">
+              <div class="h-1 bg-white/20 rounded w-3/4"></div>
+              <div class="h-1 bg-[var(--blood-red,#9B111E)] rounded w-1/2"></div>
+            </div>
+          </div>
+          <div class="text-gray-600">&lt;/div&gt;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CARD 04: UI / UX (Featured Top Right) ================= -->
+    <div class="roshni-skill-card roshni-skill-card--uiux md:col-span-5 bg-[#0E090C]/80 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-[var(--blood-red,#9B111E)]/40 hover:border-[var(--blood-glow,#FF1E27)] transition-all duration-500 relative overflow-hidden group shadow-[0_10px_30px_rgba(0,0,0,0.8)] roshni-reveal-item" data-tilt>
+      <div class="roshni-card-light-sweep"></div>
+      
+      <div class="flex justify-between items-center mb-6 z-10 relative">
+        <span class="font-mono text-xs font-bold tracking-widest text-[var(--blood-glow,#FF1E27)]">04 ✦ UI / UX</span>
+        <span class="text-xs font-mono text-[var(--blood-glow,#FF1E27)] bg-[#1F070A] px-3 py-1 rounded-full border border-[var(--blood-glow,#FF1E27)]/40 shadow-[0_0_10px_rgba(255,30,39,0.3)]">FEATURED</span>
+      </div>
+
+      <div class="mb-6 z-10 relative">
+        <h3 class="text-2xl md:text-3xl font-syne font-bold text-white mb-2 group-hover:text-[var(--blood-glow,#FF1E27)] transition-colors">
+          Figma
+        </h3>
+        <p class="text-gray-400 text-sm font-light">
+          Architecting complete visual identities, design tokens, responsive layouts, and interactive user flows.
+        </p>
+      </div>
+
+      <!-- Interactive Miniature Design Canvas -->
+      <div class="roshni-figma-canvas relative h-36 bg-[#060305] border border-dashed border-[var(--blood-red,#9B111E)]/60 rounded-2xl p-3 overflow-hidden">
+        <!-- Miniature Design Selection Frame -->
+        <div class="roshni-design-frame absolute inset-4 border border-[var(--blood-glow,#FF1E27)] rounded-xl p-2 bg-[var(--blood-red,#9B111E)]/10 transition-all duration-500 group-hover:scale-95">
+          <!-- Frame Selection Handles -->
+          <span class="absolute -top-1 -left-1 w-2 h-2 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+          <span class="absolute -top-1 -right-1 w-2 h-2 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+          <span class="absolute -bottom-1 -left-1 w-2 h-2 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+          <span class="absolute -bottom-1 -right-1 w-2 h-2 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+          
+          <div class="flex justify-between items-center text-[10px] text-gray-400 font-mono">
+            <span>Frame_01</span>
+            <span class="text-[var(--blood-glow,#FF1E27)]">1080 x 1920</span>
+          </div>
+
+          <div class="mt-3 flex items-center gap-2">
+            <div class="w-6 h-6 rounded-full bg-[var(--blood-glow,#FF1E27)]/30 border border-[var(--blood-glow,#FF1E27)] flex items-center justify-center text-xs">✦</div>
+            <div class="h-2 bg-white/30 rounded w-20"></div>
+          </div>
+        </div>
+
+        <!-- Animated Figma Cursor Target -->
+        <div class="roshni-figma-cursor absolute bottom-2 right-4 flex items-center gap-1 transition-all duration-700 group-hover:-translate-x-12 group-hover:-translate-y-8">
+          <svg width="16" height="16" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0L16 11.5L8.5 12.5L5 16.5L0 0Z" fill="#FF1E27"/>
+          </svg>
+          <span class="text-[9px] font-mono bg-[var(--blood-glow,#FF1E27)] text-white px-1.5 py-0.5 rounded shadow">Roshni</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CARD 02: INTERACTION ================= -->
+    <div class="roshni-skill-card roshni-skill-card--interaction md:col-span-4 bg-[#0E090C]/80 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-[var(--blood-red,#9B111E)]/40 hover:border-[var(--blood-glow,#FF1E27)] transition-all duration-500 relative overflow-hidden group shadow-[0_10px_30px_rgba(0,0,0,0.8)] roshni-reveal-item" data-tilt>
+      <div class="roshni-card-light-sweep"></div>
+      
+      <div class="flex justify-between items-center mb-6 z-10 relative">
+        <span class="font-mono text-xs font-bold tracking-widest text-[var(--blood-glow,#FF1E27)]">02 ✦ INTERACTION</span>
+      </div>
+
+      <div class="mb-6 z-10 relative">
+        <h3 class="text-xl md:text-2xl font-syne font-bold text-white mb-2 group-hover:text-[var(--blood-glow,#FF1E27)] transition-colors">
+          Bootstrap / jQuery
+        </h3>
+        <p class="text-gray-400 text-xs font-light">
+          Building connected UI component states and event-driven animations.
+        </p>
+      </div>
+
+      <!-- Miniature Connected UI Nodes -->
+      <div class="roshni-nodes-container relative h-28 bg-[#060305] rounded-xl border border-[var(--blood-red,#9B111E)]/30 p-3 flex items-center justify-around overflow-hidden">
+        <div class="roshni-node w-10 h-10 rounded-xl bg-[#1A090C] border border-[var(--blood-red,#9B111E)] flex items-center justify-center text-xs text-[var(--blood-glow,#FF1E27)] group-hover:scale-110 group-hover:border-[var(--blood-glow,#FF1E27)] transition-all">
+          #ui
+        </div>
+        
+        <!-- Connecting Line -->
+        <div class="h-0.5 flex-1 bg-gradient-to-r from-[var(--blood-red,#9B111E)] via-[var(--blood-glow,#FF1E27)] to-[var(--blood-red,#9B111E)] relative">
+          <div class="w-2 h-2 rounded-full bg-white absolute top-1/2 -translate-y-1/2 roshni-pulse-node"></div>
+        </div>
+
+        <div class="roshni-node w-10 h-10 rounded-xl bg-[#1A090C] border border-[var(--blood-red,#9B111E)] flex items-center justify-center text-xs text-white group-hover:scale-110 group-hover:border-[var(--blood-glow,#FF1E27)] transition-all">
+          $.fn
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CARD 03: BACKEND ================= -->
+    <div class="roshni-skill-card roshni-skill-card--backend md:col-span-4 bg-[#0E090C]/80 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-[var(--blood-red,#9B111E)]/40 hover:border-[var(--blood-glow,#FF1E27)] transition-all duration-500 relative overflow-hidden group shadow-[0_10px_30px_rgba(0,0,0,0.8)] roshni-reveal-item" data-tilt>
+      <div class="roshni-card-light-sweep"></div>
+      
+      <div class="flex justify-between items-center mb-6 z-10 relative">
+        <span class="font-mono text-xs font-bold tracking-widest text-[var(--blood-glow,#FF1E27)]">03 ✦ BACKEND</span>
+      </div>
+
+      <div class="mb-6 z-10 relative">
+        <h3 class="text-xl md:text-2xl font-syne font-bold text-white mb-2 group-hover:text-[var(--blood-glow,#FF1E27)] transition-colors">
+          PHP / MySQL
+        </h3>
+        <p class="text-gray-400 text-xs font-light">
+          Organizing relational data models, secure queries, and backend server endpoints.
+        </p>
+      </div>
+
+      <!-- Miniature Dark Terminal Environment -->
+      <div class="bg-[#050304] border border-[var(--blood-red,#9B111E)]/40 rounded-xl p-3 font-mono text-[11px] space-y-1.5 text-gray-400">
+        <div class="flex justify-between border-b border-white/10 pb-1 text-[10px]">
+          <span class="text-[var(--blood-glow,#FF1E27)]">DATABASE_STATUS</span>
+          <span class="text-emerald-500">● ONLINE</span>
+        </div>
+        <div class="flex justify-between">
+          <span>&gt; users_table</span>
+          <span class="text-white font-bold roshni-counter" data-target="248">0</span>
+        </div>
+        <div class="flex justify-between">
+          <span>&gt; queries_exec</span>
+          <span class="text-[var(--blood-glow,#FF1E27)] font-bold roshni-counter" data-target="99">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CARD 05: AI WORKFLOW ================= -->
+    <div class="roshni-skill-card roshni-skill-card--ai md:col-span-4 bg-[#0E090C]/80 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-[var(--blood-red,#9B111E)]/40 hover:border-[var(--blood-glow,#FF1E27)] transition-all duration-500 relative overflow-hidden group shadow-[0_10px_30px_rgba(0,0,0,0.8)] roshni-reveal-item" data-tilt>
+      <div class="roshni-card-light-sweep"></div>
+      
+      <div class="flex justify-between items-center mb-6 z-10 relative">
+        <span class="font-mono text-xs font-bold tracking-widest text-[var(--blood-glow,#FF1E27)]">05 ✦ CREATIVE WORKFLOW</span>
+      </div>
+
+      <div class="mb-6 z-10 relative">
+        <h3 class="text-xl md:text-2xl font-syne font-bold text-white mb-2 group-hover:text-[var(--blood-glow,#FF1E27)] transition-colors">
+          AI Tools
+        </h3>
+        <p class="text-gray-400 text-xs font-light">
+          Leveraging modern AI platforms to accelerate creative exploration, prototyping, and design iterations.
+        </p>
+      </div>
+
+      <!-- Animated Process Pipeline -->
+      <div class="relative bg-[#060305] border border-[var(--blood-red,#9B111E)]/30 rounded-xl p-3 flex items-center justify-between font-mono text-[9px] text-gray-400 overflow-hidden">
+        <span class="z-10">IDEA</span>
+        <span class="text-[var(--blood-glow,#FF1E27)] z-10">→</span>
+        <span class="z-10">DESIGN</span>
+        <span class="text-[var(--blood-glow,#FF1E27)] z-10">→</span>
+        <span class="z-10">BUILD</span>
+
+        <!-- Floating ✦ travelling through the pipeline -->
+        <span class="roshni-traveling-star absolute left-2 text-[var(--blood-glow,#FF1E27)] text-xs font-bold z-20">✦</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <!-- ================================================================= -->
+<!-- ROSHNI PROJECTS SECTION (ISOLATED COMPONENT)                      -->
+<!-- ================================================================= -->
+<section id="projects" class="roshni-projects-section relative z-10 py-32 px-4 md:px-8 max-w-7xl mx-auto overflow-hidden">
+  
+  <!-- Subtle Section Ambient Glow -->
+  <div class="roshni-projects-ambient-glow" aria-hidden="true"></div>
+
+  <!-- Micro Message Toast System Container -->
+  <div id="roshni-micro-toast" class="roshni-micro-toast pointer-events-none fixed bottom-8 right-8 z-50 flex items-center gap-2 bg-[#120407]/90 border border-[var(--blood-glow,#FF1E27)]/80 text-[var(--blood-glow,#FF1E27)] px-4 py-2.5 rounded-full font-mono text-xs shadow-[0_0_20px_rgba(255,30,39,0.4)] backdrop-blur-md opacity-0 translate-y-4 transition-all duration-300">
+    <span class="text-xs">✦</span>
+    <span id="roshni-toast-text">you found my little design playground</span>
+  </div>
+
+  <!-- Section Intro Header -->
+  <div class="roshni-projects-header text-center mb-20 md:mb-28 roshni-prj-reveal">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#180508] border border-[var(--blood-red,#9B111E)] text-[var(--blood-glow,#FF1E27)] font-mono text-xs uppercase tracking-widest mb-4 shadow-[0_0_15px_rgba(155,17,30,0.3)]">
+      <span>✦</span> FEATURED WORK <span>✦</span>
+    </div>
+    
+    <h2 class="text-4xl sm:text-6xl md:text-7xl font-syne font-extrabold text-white tracking-tight leading-none mb-6">
+      PRO<span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--blood-glow,#FF1E27)] via-[#E61F2A] to-[var(--blood-red,#9B111E)]">JE</span>CTS
+    </h2>
+
+    <p class="font-cinzel text-base md:text-xl text-gray-300 italic max-w-2xl mx-auto tracking-wide leading-relaxed">
+      "I wanted my projects to feel like little experiences, not just screenshots sitting inside boxes. <span class="text-[var(--blood-glow,#FF1E27)] not-italic">✦</span>"
+    </p>
+  </div>
+
+  <!-- Editorial Asymmetric Composition Container -->
+  <div class="roshni-projects-list space-y-24 md:space-y-36 relative">
+
+    <!-- ================================================================= -->
+    <!-- PROJECT 01 — CRM SYSTEM (Figma Design Playground)               -->
+    <!-- ================================================================= -->
+    <article class="roshni-project-card roshni-crm-card grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#0C0709]/80 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-[var(--blood-red,#9B111E)]/40 hover:border-[var(--blood-glow,#FF1E27)]/80 transition-all duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.8)] roshni-prj-reveal relative overflow-hidden group">
+      
+      <!-- Ambient Card Highlight -->
+      <div class="roshni-card-light-sweep"></div>
+
+      <!-- Project Metadata & Content (Left Column) -->
+      <div class="lg:col-span-5 space-y-6 z-10 relative">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs font-bold tracking-widest text-[var(--blood-glow,#FF1E27)]">01 ✦ UI/UX DESIGN</span>
+          <span class="font-mono text-xs text-gray-400 bg-[#1A0A0E] px-3 py-1 rounded-full border border-[var(--blood-red,#9B111E)]/30">FIGMA WORKSPACE</span>
+        </div>
+
+        <h3 class="text-3xl md:text-4xl font-syne font-bold text-white group-hover:text-[var(--blood-glow,#FF1E27)] transition-colors">
+          CRM SYSTEM
+        </h3>
+
+        <p class="text-gray-300 text-sm md:text-base font-light leading-relaxed">
+          A CRM interface designed in Figma, focused on structure, clarity, and making complex information feel easier to explore.
+        </p>
+
+        <!-- Tech Labels -->
+        <div class="flex flex-wrap gap-2 pt-2">
+          <span class="text-xs font-mono px-3 py-1 rounded-md bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">FIGMA</span>
+          <span class="text-xs font-mono px-3 py-1 rounded-md bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">UI/UX</span>
+          <span class="text-xs font-mono px-3 py-1 rounded-md bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">DESIGN SYSTEM</span>
+        </div>
+
+        <!-- Project Link Action -->
+        <div class="pt-4">
+          <a href="#" onclick="roshniOpenProject('crm'); return false;" class="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-white uppercase bg-[#180508] border border-[var(--blood-glow,#FF1E27)]/60 px-5 py-2.5 rounded-full hover:bg-[var(--blood-glow,#FF1E27)] hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(255,30,39,0.2)]">
+            <span>VIEW PROJECT</span>
+            <span class="text-sm">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Interactive Figma Design Playground (Right Column) -->
+      <div class="lg:col-span-7 z-10 relative">
+        <div class="roshni-crm-playground relative h-80 sm:h-96 bg-[#050204] border border-dashed border-[var(--blood-red,#9B111E)]/60 rounded-2xl p-4 overflow-hidden shadow-inner select-none">
+          
+          <!-- Playground Canvas Label -->
+          <div class="absolute top-3 left-3 flex items-center gap-2 text-[10px] font-mono text-gray-500 pointer-events-none z-20">
+            <span class="w-2 h-2 rounded-full bg-[var(--blood-glow,#FF1E27)] animate-pulse"></span>
+            <span>Interactive Figma Workspace (Drag panels below)</span>
+          </div>
+
+          <!-- Draggable Component 1: Metric Panel -->
+          <div class="roshni-drag-panel absolute top-12 left-6 w-44 bg-[#11070A]/90 border border-[var(--blood-glow,#FF1E27)]/70 rounded-xl p-3 shadow-lg cursor-grab active:cursor-grabbing transition-shadow z-10" data-msg="move things around... I don’t mind. ✦">
+            <div class="flex items-center justify-between text-[10px] font-mono text-gray-400 mb-2">
+              <span>Conversion Rate</span>
+              <span class="text-[var(--blood-glow,#FF1E27)]">+24.8%</span>
+            </div>
+            <div class="text-lg font-mono font-bold text-white">12,840</div>
+            <div class="w-full bg-white/10 h-1 rounded-full mt-2 overflow-hidden">
+              <div class="bg-[var(--blood-glow,#FF1E27)] h-full w-3/4"></div>
+            </div>
+            <!-- Selection Handles -->
+            <span class="absolute -top-1 -left-1 w-1.5 h-1.5 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+            <span class="absolute -top-1 -right-1 w-1.5 h-1.5 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+            <span class="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+            <span class="absolute -bottom-1 -right-1 w-1.5 h-1.5 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+          </div>
+
+          <!-- Draggable Component 2: Customer Profile Card -->
+          <div class="roshni-drag-panel absolute top-28 right-8 w-52 bg-[#11070A]/90 border border-[var(--blood-red,#9B111E)]/70 rounded-xl p-3 shadow-lg cursor-grab active:cursor-grabbing transition-shadow z-10" data-msg="tiny UI, big ideas. ✦">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-[var(--blood-glow,#FF1E27)]/20 border border-[var(--blood-glow,#FF1E27)] flex items-center justify-center text-xs text-[var(--blood-glow,#FF1E27)] font-bold">RK</div>
+              <div>
+                <div class="text-xs font-bold text-white">Roshni Karmakar</div>
+                <div class="text-[10px] font-mono text-gray-400">Lead Enterprise Client</div>
+              </div>
+            </div>
+            <div class="mt-2.5 pt-2 border-t border-white/10 flex justify-between text-[9px] font-mono">
+              <span class="text-gray-500">Status</span>
+              <span class="text-emerald-400 font-bold">Active Deal</span>
+            </div>
+            <!-- Selection Handles -->
+            <span class="absolute -top-1 -left-1 w-1.5 h-1.5 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+            <span class="absolute -top-1 -right-1 w-1.5 h-1.5 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+            <span class="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+            <span class="absolute -bottom-1 -right-1 w-1.5 h-1.5 bg-white border border-[var(--blood-glow,#FF1E27)]"></span>
+          </div>
+
+          <!-- Draggable Component 3: Quick Action Navigation -->
+          <div class="roshni-drag-panel absolute bottom-6 left-12 w-60 bg-[#11070A]/90 border border-[var(--blood-glow,#FF1E27)]/70 rounded-xl p-3 shadow-lg cursor-grab active:cursor-grabbing transition-shadow z-10" data-msg="you found my little design playground ✦">
+            <div class="text-[10px] font-mono text-gray-400 mb-1.5">Quick Pipeline Navigation</div>
+            <div class="flex gap-1.5">
+              <span class="text-[10px] font-mono bg-[var(--blood-glow,#FF1E27)] text-white px-2 py-0.5 rounded">Leads</span>
+              <span class="text-[10px] font-mono bg-white/10 text-gray-300 px-2 py-0.5 rounded">Deals</span>
+              <span class="text-[10px] font-mono bg-white/10 text-gray-300 px-2 py-0.5 rounded">Reports</span>
+            </div>
+          </div>
+
+          <!-- Decorative Design Grid Canvas Lines -->
+          <div class="absolute inset-0 bg-[radial-gradient(#9B111E_1px,transparent_1px)] [background-size:16px_16px] opacity-20 pointer-events-none"></div>
+        </div>
+      </div>
+
+    </article>
+
+
+    <!-- ================================================================= -->
+    <!-- PROJECT 02 — KANBAN BOARD (Interactive Board)                    -->
+    <!-- ================================================================= -->
+    <article class="roshni-project-card roshni-kanban-card grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#0C0709]/80 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-[var(--blood-red,#9B111E)]/40 hover:border-[var(--blood-glow,#FF1E27)]/80 transition-all duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.8)] roshni-prj-reveal relative overflow-hidden group">
+      
+      <!-- Ambient Card Highlight -->
+      <div class="roshni-card-light-sweep"></div>
+
+      <!-- Interactive Board (Left Column on Desktop for Editorial Variety) -->
+      <div class="lg:col-span-7 order-2 lg:order-1 z-10 relative">
+        <div class="roshni-kanban-board bg-[#050204] border border-[var(--blood-red,#9B111E)]/60 rounded-2xl p-4 min-h-[340px] shadow-inner select-none">
+          
+          <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+            <span class="text-[10px] font-mono text-gray-400">✦ Drag tasks between columns</span>
+            <span class="text-[10px] font-mono text-[var(--blood-glow,#FF1E27)]">Sprint #04</span>
+          </div>
+
+          <!-- 3 Columns Layout -->
+          <div class="grid grid-cols-3 gap-3">
+            
+            <!-- Column 1: TO DO -->
+            <div class="roshni-kanban-col bg-[#0E0608] rounded-xl p-2 border border-white/5 min-h-[240px]" data-col="todo">
+              <div class="text-[10px] font-mono font-bold text-gray-400 mb-2 px-1 flex justify-between">
+                <span>TO DO</span>
+                <span class="text-[var(--blood-glow,#FF1E27)]">✦</span>
+              </div>
+              <div class="space-y-2">
+                <div class="roshni-kanban-item bg-[#1A0B0E] border border-[var(--blood-red,#9B111E)]/60 rounded-lg p-2.5 cursor-grab text-xs font-mono text-gray-200 shadow hover:border-[var(--blood-glow,#FF1E27)] transition-all" draggable="true" id="task-1">
+                  Design layout
+                </div>
+                <div class="roshni-kanban-item bg-[#1A0B0E] border border-[var(--blood-red,#9B111E)]/60 rounded-lg p-2.5 cursor-grab text-xs font-mono text-gray-200 shadow hover:border-[var(--blood-glow,#FF1E27)] transition-all" draggable="true" id="task-2">
+                  Fix responsive UI
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: DOING -->
+            <div class="roshni-kanban-col bg-[#0E0608] rounded-xl p-2 border border-white/5 min-h-[240px]" data-col="doing">
+              <div class="text-[10px] font-mono font-bold text-amber-500 mb-2 px-1 flex justify-between">
+                <span>DOING</span>
+                <span>●</span>
+              </div>
+              <div class="space-y-2">
+                <div class="roshni-kanban-item bg-[#1A0B0E] border border-[var(--blood-red,#9B111E)]/60 rounded-lg p-2.5 cursor-grab text-xs font-mono text-gray-200 shadow hover:border-[var(--blood-glow,#FF1E27)] transition-all" draggable="true" id="task-3">
+                  Polish interactions
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 3: DONE -->
+            <div class="roshni-kanban-col bg-[#0E0608] rounded-xl p-2 border border-white/5 min-h-[240px]" data-col="done">
+              <div class="text-[10px] font-mono font-bold text-emerald-400 mb-2 px-1 flex justify-between">
+                <span>DONE</span>
+                <span>✓</span>
+              </div>
+              <div class="space-y-2">
+                <div class="roshni-kanban-item bg-[#1A0B0E] border border-[var(--blood-red,#9B111E)]/60 rounded-lg p-2.5 cursor-grab text-xs font-mono text-gray-200 shadow hover:border-[var(--blood-glow,#FF1E27)] transition-all" draggable="true" id="task-4">
+                  Drink water ✦
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Metadata & Content (Right Column) -->
+      <div class="lg:col-span-5 order-1 lg:order-2 space-y-6 z-10 relative">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs font-bold tracking-widest text-[var(--blood-glow,#FF1E27)]">02 ✦ WEB INTERFACE</span>
+          <span class="font-mono text-xs text-gray-400 bg-[#1A0A0E] px-3 py-1 rounded-full border border-[var(--blood-red,#9B111E)]/30">PRODUCTIVITY UI</span>
+        </div>
+
+        <h3 class="text-3xl md:text-4xl font-syne font-bold text-white group-hover:text-[var(--blood-glow,#FF1E27)] transition-colors">
+          KANBAN BOARD
+        </h3>
+
+        <p class="text-gray-300 text-sm md:text-base font-light leading-relaxed">
+          An interactive Kanban board built around simple task management, clear visual hierarchy, and satisfying interactions.
+        </p>
+
+        <!-- Tech Labels -->
+        <div class="flex flex-wrap gap-2 pt-2">
+          <span class="text-xs font-mono px-3 py-1 rounded-md bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">HTML</span>
+          <span class="text-xs font-mono px-3 py-1 rounded-md bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">CSS</span>
+          <span class="text-xs font-mono px-3 py-1 rounded-md bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">JAVASCRIPT</span>
+        </div>
+
+        <!-- Project Link Action -->
+        <div class="pt-4">
+          <a href="#" onclick="roshniOpenProject('kanban'); return false;" class="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-white uppercase bg-[#180508] border border-[var(--blood-glow,#FF1E27)]/60 px-5 py-2.5 rounded-full hover:bg-[var(--blood-glow,#FF1E27)] hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(255,30,39,0.2)]">
+            <span>EXPLORE PROJECT</span>
+            <span class="text-sm">↗</span>
+          </a>
+        </div>
+      </div>
+
+    </article>
+
+
+    <!-- ================================================================= -->
+    <!-- PROJECT 03 — MY PORTFOLIO (Miniature World Representation)       -->
+    <!-- ================================================================= -->
+    <article class="roshni-project-card roshni-portfolio-card grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#0C0709]/80 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-[var(--blood-red,#9B111E)]/40 hover:border-[var(--blood-glow,#FF1E27)]/80 transition-all duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.8)] roshni-prj-reveal relative overflow-hidden group">
+      
+      <!-- Ambient Card Highlight -->
+      <div class="roshni-card-light-sweep"></div>
+
+      <!-- Project Metadata & Content (Left Column) -->
+      <div class="lg:col-span-5 space-y-6 z-10 relative">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs font-bold tracking-widest text-[var(--blood-glow,#FF1E27)]">03 ✦ PERSONAL PROJECT</span>
+          <span class="font-mono text-xs text-[var(--blood-glow,#FF1E27)] bg-[#1A0A0E] px-3 py-1 rounded-full border border-[var(--blood-glow,#FF1E27)]/40 shadow-[0_0_10px_rgba(255,30,39,0.3)]">THIS WEBSITE</span>
+        </div>
+
+        <h3 class="text-3xl md:text-4xl font-syne font-bold text-white group-hover:text-[var(--blood-glow,#FF1E27)] transition-colors">
+          MY PORTFOLIO
+        </h3>
+
+        <p class="text-gray-300 text-sm md:text-base font-light leading-relaxed">
+          A portfolio built as an experiment in interaction, visual storytelling, motion, and personality.
+        </p>
+
+        <!-- Quote Highlight -->
+        <p class="font-cinzel italic text-xs md:text-sm text-[var(--blood-glow,#FF1E27)] border-l-2 border-[var(--blood-glow,#FF1E27)] pl-3">
+          "I wanted my portfolio to be something you explore, not just something you scroll. ✦"
+        </p>
+
+        <!-- Tech Labels -->
+        <div class="flex flex-wrap gap-2 pt-2">
+          <span class="text-xs font-mono px-3 py-1 rounded-md bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">HTML</span>
+          <span class="text-xs font-mono px-3 py-1 rounded-md bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">CSS</span>
+          <span class="text-xs font-mono px-3 py-1 rounded-md bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">JAVASCRIPT</span>
+          <span class="text-xs font-mono px-3 py-1 rounded-md bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">UI/UX</span>
+        </div>
+
+        <!-- Project Link Action -->
+        <div class="pt-4">
+          <a href="#" onclick="roshniOpenProject('portfolio'); return false;" class="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-white uppercase bg-[#180508] border border-[var(--blood-glow,#FF1E27)]/60 px-5 py-2.5 rounded-full hover:bg-[var(--blood-glow,#FF1E27)] hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(255,30,39,0.2)]">
+            <span>EXPLORE WORLD</span>
+            <span class="text-sm">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Miniature Living Representation of Portfolio (Right Column) -->
+      <div class="lg:col-span-7 z-10 relative">
+        <div class="roshni-mini-portfolio-world relative h-80 sm:h-96 bg-[#040103] border border-[var(--blood-red,#9B111E)]/60 rounded-2xl p-6 overflow-hidden shadow-inner flex flex-col justify-between group/world">
+          
+          <!-- Background Grid & Twinkling Stars -->
+          <div class="absolute inset-0 bg-[linear-gradient(to_right,#1f080d_1px,transparent_1px),linear-gradient(to_bottom,#1f080d_1px,transparent_1px)] bg-[size:24px_24px] opacity-40"></div>
+          
+          <!-- Floating Miniature Stars -->
+          <div class="absolute top-8 right-12 text-[var(--blood-glow,#FF1E27)] text-xs animate-ping">✦</div>
+          <div class="absolute bottom-16 left-1/3 text-white text-[10px] opacity-60">✦</div>
+
+          <!-- Top Mini Navbar -->
+          <div class="relative z-10 flex justify-between items-center pb-4 border-b border-white/10">
+            <span class="font-mono text-xs text-white font-bold tracking-widest">ROSHNI<span class="text-[var(--blood-glow,#FF1E27)]">✦</span></span>
+            <div class="flex gap-2 text-[9px] font-mono text-gray-400">
+              <span>ABOUT</span>
+              <span>SKILLS</span>
+              <span class="text-[var(--blood-glow,#FF1E27)]">PROJECTS</span>
+            </div>
+          </div>
+
+          <!-- Mini Hero Center Section -->
+          <div class="relative z-10 text-center my-auto space-y-2 group-hover/world:scale-105 transition-transform duration-500">
+            <div class="text-[10px] font-mono text-[var(--blood-glow,#FF1E27)] tracking-widest uppercase">✦ CREATIVE DEVELOPER ✦</div>
+            <div class="text-2xl font-syne font-extrabold text-white tracking-tight">ROSHNI KARMAKAR</div>
+            <div class="text-[10px] font-cinzel italic text-gray-400">Crafting digital interactive experiences.</div>
+          </div>
+
+          <!-- Bottom Floating Status Panel -->
+          <div class="relative z-10 flex justify-between items-center pt-4 border-t border-white/10 text-[9px] font-mono text-gray-500">
+            <span>STATUS: LIVE IN YOUR BROWSER</span>
+            <span class="text-[var(--blood-glow,#FF1E27)]">100% PERSONALITY</span>
+          </div>
+
+        </div>
+      </div>
+
+    </article>
+
+  </div>
+</section>
+  <!-- ================================================================= -->
+<!-- ROSHNI EDUCATION SECTION (ISOLATED COMPONENT)                    -->
+<!-- ================================================================= -->
+<section id="education" class="roshni-education-section relative z-10 py-32 px-4 md:px-8 max-w-6xl mx-auto overflow-hidden">
+  
+  <!-- Subtle Ambient Glow -->
+  <div class="roshni-edu-ambient-glow" aria-hidden="true"></div>
+
+  <!-- Section Header -->
+  <div class="roshni-edu-header text-center mb-20 md:mb-28 roshni-edu-reveal">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#180508] border border-[var(--blood-red,#9B111E)] text-[var(--blood-glow,#FF1E27)] font-mono text-xs uppercase tracking-widest mb-4 shadow-[0_0_15px_rgba(155,17,30,0.3)]">
+      <span>✦</span> ACADEMIC & SKILL JOURNEY <span>✦</span>
+    </div>
+    
+    <h2 class="text-4xl sm:text-6xl md:text-7xl font-syne font-extrabold text-white tracking-tight leading-none mb-6">
+      EDU<span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--blood-glow,#FF1E27)] via-[#E61F2A] to-[var(--blood-red,#9B111E)]">CA</span>TION
+    </h2>
+
+    <p class="font-cinzel text-base md:text-xl text-gray-300 italic max-w-2xl mx-auto tracking-wide leading-relaxed">
+      "Knowledge is an evolving ecosystem—a continuous constellation of learning, logic, and craft. <span class="text-[var(--blood-glow,#FF1E27)] not-italic">✦</span>"
+    </p>
+  </div>
+
+  <!-- Interactive Timeline Container -->
+  <div class="roshni-edu-timeline-container relative">
+    
+    <!-- Animated Connecting Progress Line -->
+    <div class="roshni-edu-timeline-line absolute left-6 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[var(--blood-glow,#FF1E27)] via-[var(--blood-red,#9B111E)]/40 to-transparent -translate-x-1/2 z-0">
+      <div class="roshni-edu-line-pulse absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-transparent via-[var(--blood-glow,#FF1E27)] to-transparent animate-pulse"></div>
+    </div>
+
+    <!-- Timeline Entries List -->
+    <div class="space-y-16 md:space-y-24 relative z-10">
+
+      <!-- ================================================================= -->
+      <!-- ENTRY 01 — BCA (Ongoing Journey)                                 -->
+      <!-- ================================================================= -->
+      <div class="roshni-edu-item grid grid-cols-1 md:grid-cols-2 gap-8 items-center roshni-edu-reveal">
+        
+        <!-- Left Side: Content Box -->
+        <div class="md:text-right order-2 md:order-1 pl-12 md:pl-0">
+          <div class="roshni-edu-card group relative bg-[#0C0709]/80 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-[var(--blood-red,#9B111E)]/40 hover:border-[var(--blood-glow,#FF1E27)] transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden">
+            <div class="roshni-card-light-sweep"></div>
+
+            <div class="flex items-center justify-start md:justify-end gap-2 mb-3">
+              <span class="font-mono text-xs text-[var(--blood-glow,#FF1E27)] font-bold tracking-widest">01 ✦ DEGREE</span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#1F070C] border border-[var(--blood-glow,#FF1E27)]/50 text-[var(--blood-glow,#FF1E27)] font-mono text-[10px] uppercase tracking-wider animate-pulse">
+                <span class="w-1.5 h-1.5 rounded-full bg-[var(--blood-glow,#FF1E27)]"></span>
+                Currently Pursuing
+              </span>
+            </div>
+
+            <h3 class="text-2xl md:text-3xl font-syne font-bold text-white group-hover:text-[var(--blood-glow,#FF1E27)] transition-colors">
+              Bachelor of Computer Applications
+            </h3>
+            
+            <p class="font-mono text-sm text-gray-300 mt-1">IGNOU (Indira Gandhi National Open University)</p>
+
+            <p class="text-xs md:text-sm font-light text-gray-400 mt-4 leading-relaxed">
+              Building a rock-solid foundation in computer science core principles, software engineering methodologies, database architectures, and computational logic.
+            </p>
+
+            <div class="flex flex-wrap md:justify-end gap-2 mt-5">
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">Software Dev</span>
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">DBMS</span>
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">Data Structures</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Node Marker -->
+        <div class="absolute left-6 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-[#080204] border-2 border-[var(--blood-glow,#FF1E27)] shadow-[0_0_15px_rgba(255,30,39,0.6)] z-20 group">
+          <span class="text-[var(--blood-glow,#FF1E27)] text-sm group-hover:scale-125 transition-transform">✦</span>
+        </div>
+
+        <!-- Right Side: Decorative Ambient Element -->
+        <div class="hidden md:block order-3 pl-8">
+          <div class="font-mono text-4xl text-white/5 font-extrabold select-none">BCA / ACADEMICS</div>
+        </div>
+      </div>
+
+
+      <!-- ================================================================= -->
+      <!-- ENTRY 02 — WEB DEVELOPMENT (Skill Mastery & Learning)            -->
+      <!-- ================================================================= -->
+      <div class="roshni-edu-item grid grid-cols-1 md:grid-cols-2 gap-8 items-center roshni-edu-reveal">
+        
+        <!-- Left Side: Decorative Ambient Element -->
+        <div class="hidden md:block text-right pr-8">
+          <div class="font-mono text-4xl text-white/5 font-extrabold select-none">WEB DEV / CRAFT</div>
+        </div>
+
+        <!-- Center Node Marker -->
+        <div class="absolute left-6 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-[#080204] border-2 border-[var(--blood-glow,#FF1E27)] shadow-[0_0_15px_rgba(255,30,39,0.6)] z-20 group">
+          <span class="text-[var(--blood-glow,#FF1E27)] text-sm group-hover:rotate-45 transition-transform">✦</span>
+        </div>
+
+        <!-- Right Side: Content Box -->
+        <div class="pl-12 md:pl-0">
+          <div class="roshni-edu-card group relative bg-[#0C0709]/80 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-[var(--blood-red,#9B111E)]/40 hover:border-[var(--blood-glow,#FF1E27)] transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden">
+            <div class="roshni-card-light-sweep"></div>
+
+            <div class="flex items-center gap-2 mb-3">
+              <span class="font-mono text-xs text-[var(--blood-glow,#FF1E27)] font-bold tracking-widest">02 ✦ SPECIALIZATION</span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#1F070C] border border-[var(--blood-glow,#FF1E27)]/50 text-[var(--blood-glow,#FF1E27)] font-mono text-[10px] uppercase tracking-wider animate-pulse">
+                <span class="w-1.5 h-1.5 rounded-full bg-[var(--blood-glow,#FF1E27)]"></span>
+                Currently Learning
+              </span>
+            </div>
+
+            <h3 class="text-2xl md:text-3xl font-syne font-bold text-white group-hover:text-[var(--blood-glow,#FF1E27)] transition-colors">
+              Web Development
+            </h3>
+            
+            <p class="font-mono text-sm text-gray-300 mt-1">Interactive UI/UX & Web Craft</p>
+
+            <p class="text-xs md:text-sm font-light text-gray-400 mt-4 leading-relaxed">
+              Mastering modern front-end architecture, high-performance animations, fluid responsive design, and intuitive human-centric UI/UX design patterns.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mt-5">
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">HTML5/CSS3</span>
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">JavaScript ES6+</span>
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">Tailwind CSS</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- ================================================================= -->
+      <!-- ENTRY 03 — DCA (Completed Milestone)                             -->
+      <!-- ================================================================= -->
+      <div class="roshni-edu-item grid grid-cols-1 md:grid-cols-2 gap-8 items-center roshni-edu-reveal">
+        
+        <!-- Left Side: Content Box (Milestone Highlighting) -->
+        <div class="md:text-right order-2 md:order-1 pl-12 md:pl-0">
+          <div class="roshni-edu-card group relative bg-[#0F080C]/90 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-[var(--blood-glow,#FF1E27)]/80 hover:border-[var(--blood-glow,#FF1E27)] transition-all duration-500 shadow-[0_0_30px_rgba(255,30,39,0.15)] overflow-hidden">
+            <div class="roshni-card-light-sweep"></div>
+
+            <div class="flex items-center justify-start md:justify-end gap-2 mb-3">
+              <span class="font-mono text-xs text-[var(--blood-glow,#FF1E27)] font-bold tracking-widest">03 ✦ MILESTONE</span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/50 text-emerald-400 font-mono text-[10px] uppercase tracking-wider">
+                <span>✓</span>
+                Completed
+              </span>
+            </div>
+
+            <h3 class="text-2xl md:text-3xl font-syne font-bold text-white group-hover:text-[var(--blood-glow,#FF1E27)] transition-colors">
+              Diploma in Computer Applications
+            </h3>
+            
+            <p class="font-mono text-sm text-gray-300 mt-1">DCA Certification</p>
+
+            <p class="text-xs md:text-sm font-light text-gray-400 mt-4 leading-relaxed">
+              Comprehensive diploma covering fundamental computing applications, IT operations, office automation tools, and foundational software systems.
+            </p>
+
+            <div class="flex flex-wrap md:justify-end gap-2 mt-5">
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">Office Automation</span>
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">IT Fundamentals</span>
+              <span class="text-[10px] font-mono px-2.5 py-1 rounded bg-[#16070A] text-gray-300 border border-[var(--blood-red,#9B111E)]/40">Computer Systems</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Node Marker (Milestone Glow) -->
+        <div class="absolute left-6 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-[#180508] border-2 border-[var(--blood-glow,#FF1E27)] shadow-[0_0_25px_rgba(255,30,39,0.8)] z-20 group">
+          <span class="text-emerald-400 text-base font-bold group-hover:scale-125 transition-transform">✓</span>
+        </div>
+
+        <!-- Right Side: Decorative Ambient Element -->
+        <div class="hidden md:block order-3 pl-8">
+          <div class="font-mono text-4xl text-white/5 font-extrabold select-none">DCA / FOUNDATION</div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+  <!-- ================================================================= -->
+<!-- CONTACT / CALL TO ACTION SECTION (ISOLATED COMPONENT)             -->
+<!-- ================================================================= -->
+<section id="contact" class="roshni-contact-section relative z-10 py-28 px-4 md:px-8 max-w-6xl mx-auto overflow-hidden">
+  
+  <!-- Ambient Glow Effects -->
+  <div class="roshni-contact-glow" aria-hidden="true"></div>
+
+  <!-- Toast Notification for Copy Actions -->
+  <div id="roshni-contact-toast" class="pointer-events-none fixed bottom-8 right-8 z-50 flex items-center gap-2 bg-[#120407]/90 border border-[var(--blood-glow,#FF1E27)]/80 text-[var(--blood-glow,#FF1E27)] px-4 py-2.5 rounded-full font-mono text-xs shadow-[0_0_20px_rgba(255,30,39,0.4)] backdrop-blur-md opacity-0 translate-y-4 transition-all duration-300">
+    <span class="text-xs">✦</span>
+    <span id="roshni-contact-toast-text">Copied to clipboard!</span>
+  </div>
+
+  <div class="text-center space-y-8 relative z-10 roshni-contact-reveal">
+    
+    <!-- Top Decorative Star Marker -->
+    <div class="inline-flex items-center justify-center">
+      <span class="text-[var(--blood-glow,#FF1E27)] text-2xl animate-pulse">✦</span>
+    </div>
+
+    <!-- Section Heading -->
+    <h2 class="text-4xl sm:text-6xl md:text-7xl font-syne font-extrabold text-white tracking-tight leading-tight max-w-4xl mx-auto">
+      Let's Build Something <br class="hidden sm:inline" />
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--blood-glow,#FF1E27)] via-red-500 to-[var(--blood-red,#9B111E)]">Memorable</span>
+    </h2>
+
+    <!-- Subtitle -->
+    <p class="font-mono text-xs md:text-sm text-gray-400 max-w-xl mx-auto tracking-wide font-light leading-relaxed">
+      Currently available for web development opportunities, UI/UX design roles, and creative projects.
+    </p>
+
+    <!-- Interactive Social & Contact Buttons Container -->
+    <div class="flex flex-wrap items-center justify-center gap-4 pt-6">
+      
+      <!-- EMAIL BUTTON -->
+      <a href="mailto:roshnik2405@gmail.com" 
+         onclick="roshniCopyHandle(event, 'roshnik2405@gmail.com', 'Email address copied!')"
+         class="group relative inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#0F0507]/80 border border-[var(--blood-red,#9B111E)]/60 text-white font-mono text-xs md:text-sm font-semibold tracking-wider hover:border-[var(--blood-glow,#FF1E27)] hover:shadow-[0_0_25px_rgba(255,30,39,0.35)] transition-all duration-300">
+        <span class="text-[var(--blood-glow,#FF1E27)] group-hover:scale-125 transition-transform">✦</span>
+        <span>EMAIL</span>
+        <span class="text-gray-400 font-normal text-xs transition-colors group-hover:text-white">| roshnik2405@gmail.com</span>
+      </a>
+
+      <!-- INSTAGRAM BUTTON -->
+      <a href="https://instagram.com/ma._.eum.x" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="group relative inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#0F0507]/80 border border-[var(--blood-red,#9B111E)]/60 text-white font-mono text-xs md:text-sm font-semibold tracking-wider hover:border-[var(--blood-glow,#FF1E27)] hover:shadow-[0_0_25px_rgba(255,30,39,0.35)] transition-all duration-300">
+        <span class="text-[var(--blood-glow,#FF1E27)] group-hover:rotate-45 transition-transform">✦</span>
+        <span>INSTAGRAM</span>
+        <span class="text-gray-400 font-normal text-xs transition-colors group-hover:text-white">| @ma._.eum.x</span>
+      </a>
+
+      <!-- DISCORD BUTTON -->
+      <button onclick="roshniCopyHandle(event, 'mina_0x', 'Discord username copied!')"
+              class="group relative inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#0F0507]/80 border border-[var(--blood-red,#9B111E)]/60 text-white font-mono text-xs md:text-sm font-semibold tracking-wider hover:border-[var(--blood-glow,#FF1E27)] hover:shadow-[0_0_25px_rgba(255,30,39,0.35)] transition-all duration-300 cursor-pointer">
+        <span class="text-[var(--blood-glow,#FF1E27)] group-hover:scale-125 transition-transform">✦</span>
+        <span>DISCORD</span>
+        <span class="text-gray-400 font-normal text-xs transition-colors group-hover:text-white">| mina_0x</span>
+      </button>
+
+    </div>
+
+  </div>
+</section>
+
+  <!-- JavaScript for Animations, Cursor & Particles -->
+  <script>
+    // 1. Dual-Ring Custom Cursor Logic
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorDot.style.left = `${mouseX}px`;
+      cursorDot.style.top = `${mouseY}px`;
+    });
+
+    function renderCursor() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      cursorRing.style.left = `${ringX}px`;
+      cursorRing.style.top = `${ringY}px`;
+      requestAnimationFrame(renderCursor);
+    }
+    renderCursor();
+
+    // Hover state toggle on interactive elements
+    const hoverElements = document.querySelectorAll('a, button, .photo-aura, input, textarea');
+    hoverElements.forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    // 2. Interactive Canvas Particles & Twinkling Stars
+    const canvas = document.getElementById('star-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Star {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 2;
+        this.alpha = Math.random();
+        this.speed = Math.random() * 0.02 + 0.005;
+        this.isSparkle = Math.random() > 0.85;
+      }
+      update() {
+        this.alpha += this.speed;
+        if (this.alpha > 1 || this.alpha < 0) this.speed = -this.speed;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = Math.abs(this.alpha);
+        if (this.isSparkle) {
+          ctx.fillStyle = '#FF1E27';
+          ctx.font = '10px sans-serif';
+          ctx.fillText('✦', this.x, this.y);
+        } else {
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
+    const stars = Array.from({ length: 65 }, () => new Star());
+    function animateStars() {
+      ctx.clearRect(0, 0, width, height);
+      stars.forEach(star => {
+        star.update();
+        star.draw();
+      });
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+
+    // 3. Scroll Reveal Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // ==========================================
+// ROSHNI SKILLS SECTION - INTERACTIVITY SCRIPT
+// ==========================================
+(function initRoshniSkillsSection() {
+  document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Interactive 3D Card Tilt Effect on Mouse Move
+    const tiltCards = document.querySelectorAll('.roshni-skill-card[data-tilt]');
+    
+    tiltCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        // Skip tilt on touch devices or reduced motion preference
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -8; // Rotates max 8 deg
+        const rotateY = ((x - centerX) / centerX) * 8;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(10px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+      });
+    });
+
+    // 2. IntersectionObserver for Staggered Scroll Entrance
+    const revealItems = document.querySelectorAll('.roshni-reveal-item');
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const skillsObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          // Staggered reveal delay
+          setTimeout(() => {
+            entry.target.classList.add('roshni-active');
+          }, idx * 100);
+
+          // Trigger numerical counter animation for backend card if present
+          const counters = entry.target.querySelectorAll('.roshni-counter');
+          counters.forEach(counter => animateCounter(counter));
+
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    revealItems.forEach(item => skillsObserver.observe(item));
+
+    // 3. Animated Backend Counter Function
+    function animateCounter(el) {
+      const target = parseInt(el.getAttribute('data-target'), 10);
+      let current = 0;
+      const step = Math.ceil(target / 30);
+      
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          el.textContent = target;
+          clearInterval(timer);
+        } else {
+          el.textContent = current;
+        }
+      }, 40);
+    }
+
+  });
+})();
+// =================================================================
+// ROSHNI PROJECTS SECTION - INTERACTIVITY SCRIPT
+// =================================================================
+
+// 1. PROJECT LINKS URL CONFIGURATION
+// Replace the empty quotes below with your final URLs when ready.
+const roshniProjectLinks = {
+  crm: "",
+  kanban: "",
+  portfolio: "#"
+};
+
+function roshniOpenProject(key) {
+  const targetUrl = roshniProjectLinks[key];
+  if (targetUrl && targetUrl !== "") {
+    window.open(targetUrl, '_blank');
+  } else {
+    roshniShowToast("Project link coming soon! ✦");
+  }
+}
+
+// 2. MICRO MESSAGE TOAST SYSTEM
+let roshniToastTimer = null;
+function roshniShowToast(message) {
+  const toastEl = document.getElementById('roshni-micro-toast');
+  const toastText = document.getElementById('roshni-toast-text');
+  
+  if (!toastEl || !toastText) return;
+
+  toastText.textContent = message;
+  toastEl.classList.remove('opacity-0', 'translate-y-4');
+  toastEl.classList.add('opacity-100', 'translate-y-0');
+
+  if (roshniToastTimer) clearTimeout(roshniToastTimer);
+
+  roshniToastTimer = setTimeout(() => {
+    toastEl.classList.remove('opacity-100', 'translate-y-0');
+    toastEl.classList.add('opacity-0', 'translate-y-4');
+  }, 2800);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // 3. INTERSECTION OBSERVER FOR SCROLL REVEAL
+  const revealElements = document.querySelectorAll('.roshni-prj-reveal');
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const projectObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('roshni-prj-active');
+        }, index * 120);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  revealElements.forEach(el => projectObserver.observe(el));
+
+
+  // 4. CRM INTERACTIVE DRAGGABLE PANELS LOGIC
+  const dragPanels = document.querySelectorAll('.roshni-drag-panel');
+  
+  dragPanels.forEach(panel => {
+    let isDragging = false;
+    let startX, startY, initialLeft, initialTop;
+
+    const startDrag = (e) => {
+      isDragging = true;
+      panel.classList.add('is-dragging');
+      
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      startX = clientX;
+      startY = clientY;
+      initialLeft = panel.offsetLeft;
+      initialTop = panel.offsetTop;
+
+      // Trigger optional cute micro-message
+      const msg = panel.getAttribute('data-msg');
+      if (msg && Math.random() > 0.3) {
+        roshniShowToast(msg);
+      }
+    };
+
+    const doDrag = (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      const deltaX = clientX - startX;
+      const deltaY = clientY - startY;
+
+      panel.style.left = `${initialLeft + deltaX}px`;
+      panel.style.top = `${initialTop + deltaY}px`;
+    };
+
+    const stopDrag = () => {
+      if (isDragging) {
+        isDragging = false;
+        panel.classList.remove('is-dragging');
+      }
+    };
+
+    // Mouse Events
+    panel.addEventListener('mousedown', startDrag);
+    window.addEventListener('mousemove', doDrag);
+    window.addEventListener('mouseup', stopDrag);
+
+    // Touch Events for Mobile Compatibility
+    panel.addEventListener('touchstart', startDrag, { passive: true });
+    window.addEventListener('touchmove', doDrag, { passive: false });
+    window.addEventListener('touchend', stopDrag);
+  });
+
+
+  // 5. KANBAN INTERACTIVE DRAG-AND-DROP LOGIC
+  const kanbanItems = document.querySelectorAll('.roshni-kanban-item');
+  const kanbanCols = document.querySelectorAll('.roshni-kanban-col');
+
+  const kanbanMessages = [
+    "look at you, getting things done. ✦",
+    "one more off the list ✦",
+    "okayyy, productive.",
+    "progress is progress. ✦"
+  ];
+
+  kanbanItems.forEach(item => {
+    item.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', item.id);
+      item.classList.add('is-dragging-item');
+    });
+
+    item.addEventListener('dragend', () => {
+      item.classList.remove('is-dragging-item');
+    });
+  });
+
+  kanbanCols.forEach(col => {
+    col.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      col.classList.add('drag-over-col');
+    });
+
+    col.addEventListener('dragleave', () => {
+      col.classList.remove('drag-over-col');
+    });
+
+    col.addEventListener('drop', (e) => {
+      e.preventDefault();
+      col.classList.remove('drag-over-col');
+      
+      const itemId = e.dataTransfer.getData('text/plain');
+      const draggedItem = document.getElementById(itemId);
+      
+      if (draggedItem) {
+        col.querySelector('.space-y-2').appendChild(draggedItem);
+        
+        // Randomly display micro toast on meaningful action
+        const randomMsg = kanbanMessages[Math.floor(Math.random() * kanbanMessages.length)];
+        roshniShowToast(randomMsg);
+      }
+    });
+  });
+
+});
+// =================================================================
+// ROSHNI EDUCATION SECTION - SCROLL REVEAL & PARALLAX SCRIPT
+// =================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  const eduRevealElements = document.querySelectorAll('.roshni-edu-reveal');
+
+  const eduObserverOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -40px 0px'
+  };
+
+  const eduObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('roshni-edu-active');
+        }, index * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, eduObserverOptions);
+
+  eduRevealElements.forEach(el => eduObserver.observe(el));
+});
+// =================================================================
+// CONTACT SECTION SCRIPT                                            
+// =================================================================
+
+let roshniContactToastTimer = null;
+
+function roshniShowContactToast(text) {
+  const toast = document.getElementById('roshni-contact-toast');
+  const toastText = document.getElementById('roshni-contact-toast-text');
+  
+  if (!toast || !toastText) return;
+
+  toastText.textContent = text;
+  toast.classList.remove('opacity-0', 'translate-y-4');
+  toast.classList.add('opacity-100', 'translate-y-0');
+
+  if (roshniContactToastTimer) clearTimeout(roshniContactToastTimer);
+
+  roshniContactToastTimer = setTimeout(() => {
+    toast.classList.remove('opacity-100', 'translate-y-0');
+    toast.classList.add('opacity-0', 'translate-y-4');
+  }, 2500);
+}
+
+function roshniCopyHandle(event, textToCopy, successMsg) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(textToCopy);
+    roshniShowContactToast(successMsg);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const contactReveal = document.querySelector('.roshni-contact-reveal');
+  if (contactReveal) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('roshni-contact-active');
+        }
+      });
+    }, { threshold: 0.2 });
+    
+    observer.observe(contactReveal);
+  }
+});
+  </script>
+
+</body>
+</html>

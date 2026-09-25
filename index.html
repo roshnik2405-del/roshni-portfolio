@@ -72,6 +72,25 @@
       backdrop-filter: blur(12px);
       border: 1px solid rgba(155, 17, 30, 0.4);
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(155, 17, 30, 0.2);
+      max-width: calc(100vw - 2rem);
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .nav-pill::-webkit-scrollbar {
+      display: none;
+    }
+    /* Allow the pill to scroll horizontally instead of overflowing the viewport on small screens */
+    @media (max-width: 640px) {
+      .nav-pill {
+        overflow-x: auto;
+        gap: 1rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      .nav-pill a {
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
     }
 
     /* Blood-Red Glowing Button Component */
@@ -450,6 +469,31 @@
     opacity: 1 !important;
   }
 }
+
+/* ================================================================= */
+/* GLOBAL RESPONSIVE SAFETY NET (mobile/tablet only — no change to    */
+/* the existing desktop design)                                       */
+/* ================================================================= */
+
+/* Never let any single element force horizontal scrolling */
+img, svg, video, canvas {
+  max-width: 100%;
+}
+
+/* Keep long headline words from spilling past the viewport edge on tiny phones */
+h1, h2, h3 {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+@media (max-width: 480px) {
+  /* Gently scale down the interactive Figma drag-panel playground so all
+     three panels stay comfortably inside their frame on very small phones */
+  .roshni-crm-playground .roshni-drag-panel {
+    transform: scale(0.82);
+    transform-origin: top left;
+  }
+}
   </style>
 </head>
 <body class="bg-grid-fixed relative min-h-screen">
@@ -496,7 +540,7 @@
       <!-- Main Headline -->
       <div class="reveal space-y-1">
         <p class="text-2xl md:text-3xl font-cinzel text-gray-400">Hi, I'm</p>
-        <h1 class="text-6xl md:text-8xl font-syne font-extrabold tracking-tight text-white leading-none">
+        <h1 class="text-4xl sm:text-6xl md:text-8xl font-syne font-extrabold tracking-tight text-white leading-none">
           Roshni <br/>
           <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--blood-glow)] via-[#D92B34] to-[var(--blood-red)] drop-shadow-[0_0_20px_rgba(255,30,39,0.5)]">
             Karmakar
@@ -524,7 +568,7 @@
     <!-- Right Column: Interactive Profile Photo -->
     <div class="reveal flex-1 flex justify-center items-center">
       <div class="photo-aura animate-float">
-        <div class="relative w-72 h-80 md:w-80 md:h-96 rounded-2xl overflow-hidden bg-[#120B10] border-2 border-[var(--blood-red)] shadow-[0_0_30px_rgba(0,0,0,0.9)]">
+        <div class="relative w-60 h-72 sm:w-72 sm:h-80 md:w-80 md:h-96 rounded-2xl overflow-hidden bg-[#120B10] border-2 border-[var(--blood-red)] shadow-[0_0_30px_rgba(0,0,0,0.9)]">
           <img src="me.pdf.jpeg" 
                alt="Roshni Karmakar" 
                class="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-700 hover:scale-105">
@@ -919,10 +963,10 @@
           </div>
 
           <!-- 3 Columns Layout -->
-          <div class="grid grid-cols-3 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             
             <!-- Column 1: TO DO -->
-            <div class="roshni-kanban-col bg-[#0E0608] rounded-xl p-2 border border-white/5 min-h-[240px]" data-col="todo">
+            <div class="roshni-kanban-col bg-[#0E0608] rounded-xl p-2 border border-white/5 min-h-[120px] sm:min-h-[240px]" data-col="todo">
               <div class="text-[10px] font-mono font-bold text-gray-400 mb-2 px-1 flex justify-between">
                 <span>TO DO</span>
                 <span class="text-[var(--blood-glow,#FF1E27)]">✦</span>
@@ -938,7 +982,7 @@
             </div>
 
             <!-- Column 2: DOING -->
-            <div class="roshni-kanban-col bg-[#0E0608] rounded-xl p-2 border border-white/5 min-h-[240px]" data-col="doing">
+            <div class="roshni-kanban-col bg-[#0E0608] rounded-xl p-2 border border-white/5 min-h-[120px] sm:min-h-[240px]" data-col="doing">
               <div class="text-[10px] font-mono font-bold text-amber-500 mb-2 px-1 flex justify-between">
                 <span>DOING</span>
                 <span>●</span>
@@ -951,7 +995,7 @@
             </div>
 
             <!-- Column 3: DONE -->
-            <div class="roshni-kanban-col bg-[#0E0608] rounded-xl p-2 border border-white/5 min-h-[240px]" data-col="done">
+            <div class="roshni-kanban-col bg-[#0E0608] rounded-xl p-2 border border-white/5 min-h-[120px] sm:min-h-[240px]" data-col="done">
               <div class="text-[10px] font-mono font-bold text-emerald-400 mb-2 px-1 flex justify-between">
                 <span>DONE</span>
                 <span>✓</span>
@@ -1310,7 +1354,7 @@
          class="group relative inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#0F0507]/80 border border-[var(--blood-red,#9B111E)]/60 text-white font-mono text-xs md:text-sm font-semibold tracking-wider hover:border-[var(--blood-glow,#FF1E27)] hover:shadow-[0_0_25px_rgba(255,30,39,0.35)] transition-all duration-300">
         <span class="text-[var(--blood-glow,#FF1E27)] group-hover:scale-125 transition-transform">✦</span>
         <span>EMAIL</span>
-        <span class="text-gray-400 font-normal text-xs transition-colors group-hover:text-white">| roshnik2405@gmail.com</span>
+        <span class="hidden sm:inline text-gray-400 font-normal text-xs transition-colors group-hover:text-white">| roshnik2405@gmail.com</span>
       </a>
 
       <!-- INSTAGRAM BUTTON -->
@@ -1320,7 +1364,7 @@
          class="group relative inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#0F0507]/80 border border-[var(--blood-red,#9B111E)]/60 text-white font-mono text-xs md:text-sm font-semibold tracking-wider hover:border-[var(--blood-glow,#FF1E27)] hover:shadow-[0_0_25px_rgba(255,30,39,0.35)] transition-all duration-300">
         <span class="text-[var(--blood-glow,#FF1E27)] group-hover:rotate-45 transition-transform">✦</span>
         <span>INSTAGRAM</span>
-        <span class="text-gray-400 font-normal text-xs transition-colors group-hover:text-white">| @ma._.eum.x</span>
+        <span class="hidden sm:inline text-gray-400 font-normal text-xs transition-colors group-hover:text-white">| @ma._.eum.x</span>
       </a>
 
       <!-- DISCORD BUTTON -->
@@ -1328,7 +1372,7 @@
               class="group relative inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#0F0507]/80 border border-[var(--blood-red,#9B111E)]/60 text-white font-mono text-xs md:text-sm font-semibold tracking-wider hover:border-[var(--blood-glow,#FF1E27)] hover:shadow-[0_0_25px_rgba(255,30,39,0.35)] transition-all duration-300 cursor-pointer">
         <span class="text-[var(--blood-glow,#FF1E27)] group-hover:scale-125 transition-transform">✦</span>
         <span>DISCORD</span>
-        <span class="text-gray-400 font-normal text-xs transition-colors group-hover:text-white">| mina_0x</span>
+        <span class="hidden sm:inline text-gray-400 font-normal text-xs transition-colors group-hover:text-white">| mina_0x</span>
       </button>
 
     </div>
